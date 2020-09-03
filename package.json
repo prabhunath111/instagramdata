@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/prabhunath111/instagramdata/issues"
   },
-  "homepage": "https://github.com/prabhunath111/instagramdata#readme"
+  "homepage": "https://github.com/prabhunath111/instagramdata#readme",
+  "dependencies": {
+    "puppeteer": "^5.2.1"
+  }
 }
