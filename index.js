@@ -37,7 +37,7 @@ const puppeteer = require('puppeteer');
     // get username
     let userdata = await page.evaluate(() => {      
 
-        if(window["_sharedData"].entry_data.ProfilePage[0].graphql){
+        if(window["_sharedData"].entry_data.ProfilePage){
             return window["_sharedData"].entry_data.ProfilePage[0].graphql;
         }
         else return window.location.href;
