@@ -1,0 +1,19 @@
+{
+  "name": "instagramdata",
+  "version": "1.0.0",
+  "description": "\"Instagram Data\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prabhunath111/instagramdata.git"
+  },
+  "author": "\"Prabhu Nath Tiwary\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prabhunath111/instagramdata/issues"
+  },
+  "homepage": "https://github.com/prabhunath111/instagramdata#readme"
+}
