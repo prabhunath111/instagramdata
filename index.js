@@ -13,7 +13,7 @@ const puppeteer = require('puppeteer');
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
 
     // go to Instagram web profile (this example use Cristiano Ronaldo profile)
-    await page.goto('https://instagram.com/cristiano');
+    await page.goto('https://instagram.com/prabhu_india');
 
     // check username exists or not exists
     let isUsernameNotFound = await page.evaluate(() => {
@@ -35,13 +35,24 @@ const puppeteer = require('puppeteer');
     }
 
     // get username
-    let username = await page.evaluate(() => {
-        return document.querySelectorAll('header > section h1')[0].textContent;
+    let userdata = await page.evaluate(() => {      
+
+        if(window["_sharedData"].entry_data.ProfilePage[0].graphql){
+            return window["_sharedData"].entry_data.ProfilePage[0].graphql;
+        }
+        else return window.location.href;
     });
+
+    let pageUrl = await page.evaluate(() => {
+        return window.location.href;
+    })
 
     // check the account is verified or not
     let isVerifiedAccount = await page.evaluate(() => {
         // check selector exists
+        console.log(window.location.href)
+
+
         if(document.getElementsByClassName('coreSpriteVerifiedBadge')[0]) {
             return true;
         } else {
@@ -51,26 +62,41 @@ const puppeteer = require('puppeteer');
 
     // get username picture URL
     let usernamePictureUrl = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         return document.querySelectorAll('header img')[0].getAttribute('src');
     });
 
     // get number of total posts
     let postsCount = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         return document.querySelectorAll('header > section > ul > li span')[0].textContent.replace(/\,/g, '');
     });
 
     // get number of total followers
     let followersCount = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         return document.querySelectorAll('header > section > ul > li span')[1].getAttribute('title').replace(/\,/g, '');
     });
 
     // get number of total followings
     let followingsCount = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         return document.querySelectorAll('header > section > ul > li span')[2].textContent.replace(/\,/g, '');
     });
 
     // get bio name
     let name = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         // check selector exists
         if(document.querySelectorAll('header > section h1')[1]) {
             return document.querySelectorAll('header > section h1')[1].textContent;
@@ -81,6 +107,9 @@ const puppeteer = require('puppeteer');
 
     // get bio description
     let bio = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         if(document.querySelectorAll('h1')[0].parentNode.querySelectorAll('span')[0]) {
             return document.querySelectorAll('h1')[0].parentNode.querySelectorAll('span')[0].textContent;
         } else {
@@ -90,6 +119,9 @@ const puppeteer = require('puppeteer');
 
     // get bio URL
     let bioUrl = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         // check selector exists
         if(document.querySelectorAll('header > section div > a')[1]) {
             return document.querySelectorAll('header > section div > a')[1].getAttribute('href');
@@ -100,6 +132,9 @@ const puppeteer = require('puppeteer');
 
     // get bio display
     let bioUrlDisplay = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         // check selector exists
         if(document.querySelectorAll('header > section div > a')[1]) {
             return document.querySelectorAll('header > section div > a')[1].textContent;
@@ -110,6 +145,9 @@ const puppeteer = require('puppeteer');
 
     // check if account is private or not
     let isPrivateAccount = await page.evaluate(() => {
+        console.log(window.location.href)
+
+
         // check selector exists
         if(document.getElementsByTagName('h2')[0]) {
             // check selector text content
@@ -145,18 +183,20 @@ const puppeteer = require('puppeteer');
     });
 
     // display the result to console
-    console.log({'username': username,
-                 'is_verified_account': isVerifiedAccount,
-                 'username_picture_url': usernamePictureUrl,
-                 'posts_count': postsCount,
-                 'followers_count': followersCount,
-                 'followings_count': followingsCount,
-                 'name': name,
-                 'bio': bio,
-                 'bio_url': bioUrl,
-                 'bio_url_display': bioUrlDisplay,
-                 'is_private_account': isPrivateAccount,
-                 'recent_posts': recentPosts});
+    console.log({ userdata,
+                    pageUrl
+                //  'is_verified_account': isVerifiedAccount,
+                //  'username_picture_url': usernamePictureUrl,
+                //  'posts_count': postsCount,
+                //  'followers_count': followersCount,
+                //  'followings_count': followingsCount,
+                //  'name': name,
+                //  'bio': bio,
+                //  'bio_url': bioUrl,
+                //  'bio_url_display': bioUrlDisplay,
+                //  'is_private_account': isPrivateAccount
+                //  'recent_posts': recentPosts
+                });
 
     // close the browser
     await browser.close();
