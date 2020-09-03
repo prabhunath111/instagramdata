@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 (async () => {
     // set some options (set headless to false so we can see 
     // this automated browsing experience)
-    let launchOptions = { headless: false, args: ['--start-maximized'] };
+    let launchOptions = { headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"], silent: true };
 
     const browser = await puppeteer.launch(launchOptions);
     const page = await browser.newPage();
@@ -81,8 +81,8 @@ const puppeteer = require('puppeteer');
 
     // get bio description
     let bio = await page.evaluate(() => {
-        if(document.querySelectorAll('header h1')[1].parentNode.querySelectorAll('span')[0]) {
-            return document.querySelectorAll('header h1')[1].parentNode.querySelectorAll('span')[0].textContent;
+        if(document.querySelectorAll('h1')[0].parentNode.querySelectorAll('span')[0]) {
+            return document.querySelectorAll('h1')[0].parentNode.querySelectorAll('span')[0].textContent;
         } else {
             return '';
         }
